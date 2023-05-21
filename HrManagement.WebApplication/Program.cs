@@ -1,12 +1,14 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using HrManagement.Data.Context;
+using HrManagement.EmailService;
 using HrManagement.Ioc;
 using HrManagement.Security;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.Security.ManagementUsers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +69,16 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 
     options.Validate();
+});
+
+//email service settings
+builder.Services.AddSingleton<IEmailService>(provider =>
+{
+    string sender = builder.Configuration.GetSection("EmailService:Sender").Value;
+    string password = builder.Configuration.GetSection("EmailService:Password").Value;
+    string host = builder.Configuration.GetSection("EmailService:Host").Value;
+    int port = int.Parse(builder.Configuration.GetSection("EmailService:Port").Value);
+    return new EmailService(sender, password, host, port);  
 });
 
 var app = builder.Build();
