@@ -1,4 +1,4 @@
-using HrManagement.Security;
+using HrManagement.AppService.ViewModels.Login;
 using HrManagement.Security.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,23 +13,22 @@ namespace HrManagement.WebApplication.Pages.Login
         {
             _loginService = loginService;
         }
-        
+
         [BindProperty]
-        public new ApplicationUser User { get; set; }
+        public new LoginPageModel Model { get; set; }
         public void OnGet()
         {
         }
 
         public async Task<IActionResult> OnPost()
         {
-            var result = await _loginService.SignIn(User.UserName, User.PasswordHash);
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                return LocalRedirect("/privacy");
-            }
-            else
-            {
-                int attempt = await _loginService.GetAttemptAsync(User.UserName);
+                var result = await _loginService.SignIn(Model.UserName, Model.Password);
+                if (result.Succeeded)
+                    return LocalRedirect("/privacy");
+
+                int attempt = await _loginService.GetAttemptAsync(Model.UserName);
                 ModelState.AddModelError("", ValidationLogin.Validation(result, attempt));
             }
             return Page();

@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc().AddRazorPagesOptions(options =>
 {
     options.Conventions.AddPageRoute("/Login/login", "");
-    //options.Conventions.AuthorizePage("/privacy", Roles.ACTIVE);
+    options.Conventions.AllowAnonymousToAreaPage("/login", "/login/recoverpassword");
 }); 
 
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
