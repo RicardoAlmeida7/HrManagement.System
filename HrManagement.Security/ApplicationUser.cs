@@ -9,5 +9,7 @@ namespace HrManagement.Security
         public string FullName { get; set; }
 
         public bool FirstAccess { get; set; }
+
+        public string? TempPasswordHash { get; set; }
     }
 }

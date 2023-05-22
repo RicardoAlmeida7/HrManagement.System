@@ -6,6 +6,6 @@
 
         Task UnblockUsersAsync(string userId);
 
-        Task CreateAdminAsync(string adminName, string fullName, string email, string password);
+        Task CreateAdminAsync(string adminName, string fullName, string email, string password, string tempPasswordHash);
     }
 }

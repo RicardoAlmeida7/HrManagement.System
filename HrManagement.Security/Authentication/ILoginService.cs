@@ -6,10 +6,12 @@ namespace HrManagement.Security.Authentication
     {
         Task<SignInResult> SignIn(string userName, string password);
 
-        void SignOut();
+        Task SignOutAsync();
 
         Task<int> GetAttemptAsync(string userName);
 
-        Task<ApplicationUser?> GetUser(string userName);
+        Task<ApplicationUser?> GetUserAsync(string userName);
+
+        bool IsValidTemporaryCredentials(string tempPassword, string tempPasswordHash);
     }
 }

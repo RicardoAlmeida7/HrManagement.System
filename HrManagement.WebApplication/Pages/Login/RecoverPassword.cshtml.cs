@@ -1,5 +1,8 @@
 using HrManagement.AppService.ViewModels.Login;
 using HrManagement.EmailService;
+using HrManagement.EmailService.Templates;
+using HrManagement.Security;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,10 +11,12 @@ namespace HrManagement.WebApplication.Pages.Login
     public class RecoverPasswordModel : PageModel
     {
         private readonly IEmailService _emailService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RecoverPasswordModel(IEmailService emailService)
+        public RecoverPasswordModel(IEmailService emailService, UserManager<ApplicationUser> userManager)
         {
             _emailService = emailService;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -21,13 +26,19 @@ namespace HrManagement.WebApplication.Pages.Login
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _emailService.SendEmail(Model.Email, "Teste", "<h1>Teste</h1>");
+                    var user = await _userManager.FindByEmailAsync(Model.Email);
+                    if (user is not null)
+                    {
+                        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                        var url = Url.Page("/login/resetpassword", null, new { userId = user.Id, token }, protocol: Request.Scheme);
+                        _emailService.SendEmail(Model.Email, Subject.PASSWORD_RECOVERY, RecoverPasswordTemplate.Build(url));
+                    }
                     TempData["Message"] = "E-mail de redefinição de senha enviado com sucesso. Verifique sua caixa de entrada ou spam.";
                     return LocalRedirect("/login");
                 }

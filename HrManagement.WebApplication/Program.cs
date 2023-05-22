@@ -2,13 +2,14 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using HrManagement.Data.Context;
 using HrManagement.EmailService;
+using HrManagement.EmailService.Templates;
 using HrManagement.Ioc;
 using HrManagement.Security;
+using HrManagement.Security.Cryptography;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.Security.ManagementUsers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -120,6 +121,9 @@ static void CreateAdminUser(WebApplication app, IManagementUsers userService)
     var fullName = app.Configuration.GetSection("UserAdmin:FullName").Value;
     var password = app.Configuration.GetSection("UserAdmin:Password").Value;
     var email = app.Configuration.GetSection("UserAdmin:Email").Value;
-
-    userService.CreateAdminAsync(adminName, fullName, email, password).Wait();
+    var tempPassword = Encrypt.GenerateRandomString(8);
+    var tempPasswordHash = Encrypt.GenerateSHA256Hash(tempPassword);
+    var emailService = app.Services.GetRequiredService<IEmailService>();
+    userService.CreateAdminAsync(adminName, fullName, email, password, tempPasswordHash).Wait();
+    emailService.SendEmail(email, Subject.ACCESS_CREDENTIALS, AccessCredentialsTemplate.Build(adminName, tempPassword));
 }
