@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HrManagement.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
 
 namespace HrManagement.Security.Authentication
 {
@@ -19,7 +20,7 @@ namespace HrManagement.Security.Authentication
                     password, isPersistent: false, lockoutOnFailure: true);
         }
 
-        public void SignOut() => _signInManager.SignOutAsync();
+        public async Task SignOutAsync() => await _signInManager.SignOutAsync();
 
         public async Task<int> GetAttemptAsync(string userName)
         {
@@ -33,7 +34,13 @@ namespace HrManagement.Security.Authentication
         }
        
 
-        public async Task<ApplicationUser?> GetUser(string userName) =>
+        public async Task<ApplicationUser?> GetUserAsync(string userName) =>
             await _userManager.FindByNameAsync(userName);
+
+        public bool IsValidTemporaryCredentials(string tempPassword, string tempPasswordHash)
+        {
+            var sha256 = Encrypt.GenerateSHA256Hash(tempPassword);
+            return tempPasswordHash.Equals(sha256);
+        }
     }
 }

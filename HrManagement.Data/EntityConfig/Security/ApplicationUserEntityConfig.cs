@@ -15,6 +15,10 @@ namespace HrManagement.Data.EntityConfig.Security
             builder.Property(x => x.FullName)
                 .HasColumnName("FullName")
                 .HasColumnType("varchar(45)");
+
+            builder.Property(x => x.TempPasswordHash)
+                .HasColumnName("TempPasswordHash")
+                .HasColumnType("varchar(45)");
         }
     }
 }

@@ -37,7 +37,7 @@ namespace HrManagement.Security.ManagementUsers
             return result;
         }
 
-        public async Task CreateAdminAsync(string adminName, string fullName, string email, string password)
+        public async Task CreateAdminAsync(string adminName, string fullName, string email, string password, string tempPasswordHash)
         {
             var admin = await _userManager.FindByNameAsync(adminName);
 
@@ -48,7 +48,8 @@ namespace HrManagement.Security.ManagementUsers
                     UserName = adminName,
                     FullName = fullName,
                     Email = email,
-                    FirstAccess = true
+                    FirstAccess = true,
+                    TempPasswordHash = tempPasswordHash
                 };
 
                 _userManager.CreateAsync(user, password).Wait();
