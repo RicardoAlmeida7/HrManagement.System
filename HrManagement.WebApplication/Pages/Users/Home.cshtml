@@ -1,0 +1,84 @@
+﻿@page "/users/home"
+@using HrManagement.AppService.ViewModels.UsersViewModel;
+@using Microsoft.AspNetCore.Identity;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@using X.PagedList;
+@model HrManagement.WebApplication.Pages.Users.HomeModel
+
+<h1>Usuários</h1>
+<form asp-page="/users/home" method="get">
+    <div class="text-right row">
+        <div class="col-sm-4">
+            <div class="input-group mb-3">
+                <input type="text" name="searchString" class="form-control" placeholder="Nome">
+                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+        <div class="col-sm-8" style="text-align:right">
+            <button onclick="showInPopup('@Url.Page("/users/register",null,null, Request.Scheme)','Cadastrar usuário')"
+                    type="button"
+                    class="btn btn-outline-secondary">
+                <i class="bi bi-plus"></i>
+                Cadastrar
+            </button>
+        </div>
+    </div>
+    <table class="table custom-table-hover table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Usuário
+                </th>
+                <th>
+                    Email
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <span onclick="showInPopup('@Url.Page("/users/edit",null,new {id=item.Id}, Request.Scheme)','Editar usuário')"
+                      type="button"
+                      class="bi bi-pencil-fill">
+                    </span>
+                </td>
+                <td>
+                    <span onclick="showInPopup('@Url.Page("/users/delete",null,new {id=item.Id}, Request.Scheme)','Editar usuário')"
+                      type="button"
+                      class="bi bi-trash-fill">
+                    </span>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="pagination justify-content-end">
+        @Html.PagedListPager(Model.Users, pageNumber => Url.Page("/users/home", new {pageNumber}),
+        new PagedListRenderOptions
+        {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded
+        })
+    </div>
+</form>

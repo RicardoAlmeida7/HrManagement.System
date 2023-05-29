@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HrManagement.Ioc", "HrManag
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailService", "EmailService", "{C2C1B1AF-D185-40BC-A590-49FCAD8E922F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HrManagement.EmailService", "HrManagement.EmailService\HrManagement.EmailService.csproj", "{DFBA3077-700D-4E58-B515-983BD4BD096D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HrManagement.EmailService", "HrManagement.EmailService\HrManagement.EmailService.csproj", "{DFBA3077-700D-4E58-B515-983BD4BD096D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

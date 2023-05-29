@@ -1,0 +1,39 @@
+﻿@using HrManagement.Security.ManagementRoles;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HrManagement.WebApplication</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HrManagement.WebApplication.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-icons.css" />
+</head>
+<body>
+    <header>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <input hidden="hidden" type="checkbox" checked="@Model.SucessResult" name="SucessResult" id="SucessResult" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="form-modal">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <h5 class="modal-title p-3 mb-2 bg-dark text-white" style="text-align:center"></h5>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using HrManagement.AppService.AutoMapper.UserService;
 using HrManagement.Security.Authentication;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.Security.ManagementUsers;
@@ -17,6 +18,9 @@ namespace HrManagement.Ioc
 
             builder.RegisterType<ManagementUsers>().As<IManagementUsers>().InstancePerRequest();
             builder.RegisterType<ManagementUsers>().As<IManagementUsers>().InstancePerLifetimeScope();
+
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerRequest();
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
         }
     }
 }

@@ -8,17 +8,19 @@ using HrManagement.Security;
 using HrManagement.Security.Cryptography;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.Security.ManagementUsers;
+using HrManagement.WebApplication.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddRazorPages();
 builder.Services.AddMvc().AddRazorPagesOptions(options =>
 {
     options.Conventions.AddPageRoute("/Login/login", "");
     options.Conventions.AllowAnonymousToAreaPage("/login", "/login/recoverpassword");
-}); 
+});
 
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -44,13 +46,15 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Lockout.AllowedForNewUsers = true;
 }
 ).AddEntityFrameworkStores<HrManagementContext>()
-                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider)
+                .AddErrorDescriber<CustomIdentityErrorDescriber>();
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule(new SecurityContainerModule());
+    builder.RegisterModule(new ApplicationContainerModule());
 });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -66,7 +70,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
     options.LoginPath = "/Login/";
-    options.AccessDeniedPath = "/Login";
+    options.AccessDeniedPath = "/AccessDenied";
     options.SlidingExpiration = true;
 
     options.Validate();
@@ -79,7 +83,7 @@ builder.Services.AddSingleton<IEmailService>(provider =>
     string password = builder.Configuration.GetSection("EmailService:Password").Value;
     string host = builder.Configuration.GetSection("EmailService:Host").Value;
     int port = int.Parse(builder.Configuration.GetSection("EmailService:Port").Value);
-    return new EmailService(sender, password, host, port);  
+    return new EmailService(sender, password, host, port);
 });
 
 var app = builder.Build();
@@ -115,8 +119,9 @@ app.MapRazorPages();
 
 app.Run();
 
-static void CreateAdminUser(WebApplication app, IManagementUsers userService)
+static async Task CreateAdminUser(WebApplication app, IManagementUsers userService)
 {
+    var userManager = app.Services.GetService<IManagementUsers>();
     var adminName = app.Configuration.GetSection("UserAdmin:User").Value;
     var fullName = app.Configuration.GetSection("UserAdmin:FullName").Value;
     var password = app.Configuration.GetSection("UserAdmin:Password").Value;
@@ -124,6 +129,9 @@ static void CreateAdminUser(WebApplication app, IManagementUsers userService)
     var tempPassword = Encrypt.GenerateRandomString(8);
     var tempPasswordHash = Encrypt.GenerateSHA256Hash(tempPassword);
     var emailService = app.Services.GetRequiredService<IEmailService>();
-    userService.CreateAdminAsync(adminName, fullName, email, password, tempPasswordHash).Wait();
-    emailService.SendEmail(email, Subject.ACCESS_CREDENTIALS, AccessCredentialsTemplate.Build(adminName, tempPassword));
+    var created = await userService.CreateAdminAsync(adminName, fullName, email, password, tempPasswordHash);
+    if (created)
+    {
+        emailService.SendEmail(email, Subject.ACCESS_CREDENTIALS, AccessCredentialsTemplate.Build(adminName, tempPassword));
+    }
 }

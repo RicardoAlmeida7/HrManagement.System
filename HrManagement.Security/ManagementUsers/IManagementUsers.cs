@@ -1,4 +1,6 @@
-﻿namespace HrManagement.Security.ManagementUsers
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace HrManagement.Security.ManagementUsers
 {
     public interface IManagementUsers
     {
@@ -6,6 +8,16 @@
 
         Task UnblockUsersAsync(string userId);
 
-        Task CreateAdminAsync(string adminName, string fullName, string email, string password, string tempPasswordHash);
+        Task<IdentityResult> CreateUserAsync(ApplicationUser user, string[] roles);
+
+        Task<bool> CreateAdminAsync(string adminName, string fullName, string email, string password, string tempPasswordHash);
+
+        Task<ApplicationUser?> FindByEmailAsync(string email);
+
+        Task<IdentityResult> UpdateUserAsync(ApplicationUser user);
+
+        Task<ApplicationUser?> FindByIdAsync(string id);
+
+        Task<IdentityResult> DeleteUserAsync(ApplicationUser user);
     }
 }
