@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HrManagement.AppService\HrManagement.AppService.csproj" />
     <ProjectReference Include="..\HrManagement.Security\HrManagement.Security.csproj" />
   </ItemGroup>
 

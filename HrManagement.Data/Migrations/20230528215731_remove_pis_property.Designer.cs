@@ -3,6 +3,7 @@ using System;
 using HrManagement.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrManagement.Data.Migrations
 {
     [DbContext(typeof(HrManagementContext))]
-    partial class HrManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20230528215731_remove_pis_property")]
+    partial class remove_pis_property
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
