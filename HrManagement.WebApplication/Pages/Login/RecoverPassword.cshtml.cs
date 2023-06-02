@@ -36,8 +36,7 @@ namespace HrManagement.WebApplication.Pages.Login
                     if (user is not null)
                     {
                         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                        var ipAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                        var url = Url.Page("/login/resetpassword", null, new { userId = user.Id, token }, protocol: Request.Scheme, host: ipAddress);
+                        var url = Url.Page("/login/resetpassword", null, new { userId = user.Id, token }, protocol: Request.Scheme);
                         _emailService.SendEmail(Model.Email, Subject.PASSWORD_RECOVERY, RecoverPasswordTemplate.Build(url));
                     }
                     TempData["Message"] = "E-mail de redefinição de senha enviado com sucesso. Verifique sua caixa de entrada ou spam.";
