@@ -12,6 +12,11 @@ namespace HrManagement.WebApplication.Pages.Login
         private readonly ILoginService _loginService;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        public void OnPageHandlerExecuted()
+        {
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+        }
+
         public LoginModel(ILoginService loginService, UserManager<ApplicationUser> userManager)
         {
             _loginService = loginService;

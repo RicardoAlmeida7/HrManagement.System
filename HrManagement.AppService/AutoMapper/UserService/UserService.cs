@@ -22,5 +22,10 @@ namespace HrManagement.AppService.AutoMapper.UserService
             }
             return userPageModel;
         }
+
+        public ApplicationUser GetByUserPageModel(UserPageModel user)
+        {
+            return _mapper.Map<UserPageModel, ApplicationUser>(user);
+        }
     }
 }

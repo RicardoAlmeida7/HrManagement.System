@@ -1,4 +1,4 @@
-﻿@page 
+﻿@page
 @using HrManagement.Security.ManagementRoles;
 @using Microsoft.AspNetCore.Identity;
 @model HrManagement.WebApplication.Pages.Users.RegisterModel
@@ -10,25 +10,25 @@
     <div asp-validation-summary="ModelOnly" id="summary" class="alert alert-danger"></div>
     @Html.HiddenFor(model => model.UserPageModel.Id)
 
-    <div class="row col-12 row">
+    <div class="row">
         <div class="form-group col-4">
             @Html.LabelFor(model => model.UserPageModel.FullName, htmlAttributes: new { @class = "control-label col-md-10" })
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.UserPageModel.FullName, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            <div>
+                @Html.EditorFor(model => model.UserPageModel.FullName, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.UserPageModel.FullName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group col-4">
             @Html.LabelFor(model => model.UserPageModel.UserName, htmlAttributes: new { @class = "control-label col-md-10" })
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.UserPageModel.UserName, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            <div>
+                @Html.EditorFor(model => model.UserPageModel.UserName, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.UserPageModel.UserName, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group col-4">
             @Html.LabelFor(model => model.UserPageModel.Email, htmlAttributes: new { @class = "control-label col-md-10" })
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.UserPageModel.Email, new { htmlAttributes = new { @class = "form-control", @style = "width:300px" } })
+            <div>
+                @Html.EditorFor(model => model.UserPageModel.Email, new { htmlAttributes = new { @class = "form-control"} })
                 @Html.ValidationMessageFor(model => model.UserPageModel.Email, "", new { @class = "text-danger" })
             </div>
         </div>

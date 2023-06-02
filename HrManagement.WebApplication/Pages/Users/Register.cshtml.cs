@@ -1,3 +1,4 @@
+using HrManagement.AppService.AutoMapper.UserService;
 using HrManagement.AppService.ViewModels.UsersViewModel;
 using HrManagement.Security;
 using HrManagement.Security.ManagementRoles;
@@ -20,30 +21,24 @@ namespace HrManagement.WebApplication.Pages.Users
         public IList<string> SelectedRoles { get; set; }
 
         private readonly IManagementUsers _managementUsers;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserService _userService;
 
-        public RegisterModel(IManagementUsers managementUsers, RoleManager<IdentityRole> roleManager)
+        public RegisterModel(IManagementUsers managementUsers, RoleManager<IdentityRole> roleManager, IUserService userService)
         {
             _managementUsers = managementUsers;
-            _roleManager = roleManager;
+            UserPageModel = new UserPageModel(roleManager);
+            _userService = userService;
         }
 
         public void OnGet()
         {
-            UserPageModel = new UserPageModel(_roleManager);
         }
 
         public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser()
-                {
-                    UserName = UserPageModel.UserName,
-                    FirstAccess = true,
-                    Email = UserPageModel.Email,
-                    FullName = UserPageModel.FullName
-                };
+                var user = _userService.GetByUserPageModel(UserPageModel);
                 var result = await _managementUsers.CreateUserAsync(user, SelectedRoles.ToArray());
                 if (result.Succeeded)
                 {
@@ -55,7 +50,6 @@ namespace HrManagement.WebApplication.Pages.Users
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            UserPageModel = new UserPageModel(_roleManager);
             return Page();
         }
     }
