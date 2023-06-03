@@ -1,0 +1,14 @@
+﻿using HrManagement.Data.Context;
+using HrManagement.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace HrManagement.Data.Repositories.GenericsRepositories
+{
+    public class ContactRepository : BaseRepository<ContactEntity>, IContactRepository
+    {
+        public ContactRepository(DbContextOptions<HrManagementContext> contextOptions) 
+            : base(contextOptions)
+        {
+        }
+    }
+}

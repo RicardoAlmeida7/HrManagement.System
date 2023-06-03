@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HrManagement.AppService\HrManagement.AppService.csproj" />
+    <ProjectReference Include="..\HrManagement.Data\HrManagement.Data.csproj" />
     <ProjectReference Include="..\HrManagement.Security\HrManagement.Security.csproj" />
   </ItemGroup>
 
