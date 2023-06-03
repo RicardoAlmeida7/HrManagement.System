@@ -55,6 +55,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
 {
     builder.RegisterModule(new SecurityContainerModule());
     builder.RegisterModule(new ApplicationContainerModule());
+    builder.RegisterModule(new RepositoriesContainerBuilder());
 });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
