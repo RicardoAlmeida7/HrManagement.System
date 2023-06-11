@@ -22,6 +22,7 @@ namespace HrManagement.Data.EntityConfig.Domain.Company
             builder.HasMany(e => e.Employees)
                 .WithOne(e => e.Department)
                 .HasForeignKey(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         }
     }

@@ -1,6 +1,5 @@
 ﻿using HrManagement.Domain.Entities;
 using HrManagement.Domain.Entities.Company;
-using HrManagement.Domain.Entities.ThirdPartyServices.Medical;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -40,25 +39,35 @@ namespace HrManagement.Data.EntityConfig.Domain.Company
                 .HasColumnName("date_of_birth")
                 .IsRequired();
 
-            builder.HasOne(e => e.MedicalExam)
-                .WithOne()
-                .HasForeignKey<MedicalExamEntity>(me => me.EmployeeId)
-                .IsRequired();
-
-            builder.HasOne(e => e.Contact)
-                .WithOne()
-                .HasForeignKey<ContactEntity>(c => c.EmployeeId)
-                .IsRequired();
-
-            builder.HasOne(e => e.Address)
-                .WithOne()
-                .HasForeignKey<AddressEntity>(a => a.EmployeeId)
-                .IsRequired();
+            builder.Property(e => e.DepartmentId)
+             .HasColumnName("department_id");
 
             builder.HasOne(e => e.Department)
-                .WithMany()
-                .HasForeignKey(e => e.DepartmentId)
-                .IsRequired();
+                .WithMany(e => e.Employees)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasForeignKey(e => e.DepartmentId);
+
+            builder.HasOne(e => e.Contact)
+                .WithOne(e => e.Employee)
+                .HasForeignKey<ContactEntity>(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(e => e.Address)
+                .WithOne(e => e.Employee)
+                .HasForeignKey<AddressEntity>(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Navigation(x => x.Address)
+              .UsePropertyAccessMode(PropertyAccessMode.Field)
+              .AutoInclude();
+
+            builder.Navigation(x => x.Contact)
+              .UsePropertyAccessMode(PropertyAccessMode.Field)
+              .AutoInclude();
+
+            builder.Navigation(x => x.Department)
+              .UsePropertyAccessMode(PropertyAccessMode.Field)
+              .AutoInclude();
         }
     }
 }

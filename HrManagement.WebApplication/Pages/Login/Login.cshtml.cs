@@ -51,7 +51,7 @@ namespace HrManagement.WebApplication.Pages.Login
                 {
                     var result = await _loginService.SignIn(Model.UserName, Model.Password);
                     if (result.Succeeded)
-                        return LocalRedirect("/privacy");
+                        return LocalRedirect("/company/employee/home");
 
                     int attempt = await _loginService.GetAttemptAsync(Model.UserName);
                     ModelState.AddModelError(string.Empty, ValidationLogin.Validation(result, attempt));

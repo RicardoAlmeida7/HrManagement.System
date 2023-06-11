@@ -25,7 +25,7 @@ builder.Services.AddMvc().AddRazorPagesOptions(options =>
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<HrManagementContext>(options =>
-    options.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection))
+    options.EnableSensitiveDataLogging().UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection))
 );
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -56,6 +56,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new SecurityContainerModule());
     builder.RegisterModule(new ApplicationContainerModule());
     builder.RegisterModule(new RepositoriesContainerBuilder());
+    builder.RegisterModule(new AppServicesContainerBuilder());
 });
 
 builder.Services.Configure<CookiePolicyOptions>(options =>

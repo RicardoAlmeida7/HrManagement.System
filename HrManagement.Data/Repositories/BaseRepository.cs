@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HrManagement.Data.Repositories
 {
-    public abstract class BaseRepository<BaseEntity> : IDisposable, IBaseRepository<BaseEntity> where BaseEntity : class
+    public abstract class BaseRepository<T> : IDisposable, IBaseRepository<T> where T : class
     {
         private readonly HrManagementContext _context;
 
@@ -12,16 +12,15 @@ namespace HrManagement.Data.Repositories
             _context = new HrManagementContext(contextOptions);
         }
 
-        public async Task<bool> CreateAsync(BaseEntity entity)
+        public async Task<bool> CreateAsync(T entity)
         {
-            await _context.Set<BaseEntity>().AddAsync(entity);
+            await _context.AddAsync(entity);
             return (await _context.SaveChangesAsync() > 0);
         }
 
-        public async Task<bool> DeleteAsync(BaseEntity entity)
+        public async Task<bool> DeleteAsync(T entity)
         {
-            _context.Set<BaseEntity>().Attach(entity);
-            _context.Set<BaseEntity>().Remove(entity);
+            _context.Remove(entity);
             return (await _context.SaveChangesAsync() > 0);
         }
 
@@ -39,24 +38,24 @@ namespace HrManagement.Data.Repositories
             }
         }
 
-        public IEnumerable<BaseEntity> ReadAll()
+        public IEnumerable<T> ReadAll()
         {
-            return _context.Set<BaseEntity>().AsNoTracking().ToList();
+            return _context.Set<T>().AsNoTracking().ToList();
         }
 
-        public async Task<BaseEntity> ReadByIdAsync(int id)
+        public async Task<T> ReadByIdAsync(int id)
         {
-            return await _context.Set<BaseEntity>().FindAsync(id);
+            return await _context.Set<T>().FindAsync(id); 
         }
 
-        public async Task<BaseEntity> ReadByIdAsync(Guid id)
+        public async Task<T> ReadByIdAsync(Guid id)
         {
-            return await _context.Set<BaseEntity>().FindAsync(id);
+            return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<bool> UpdateAsync(BaseEntity entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.Update(entity);
             return (await _context.SaveChangesAsync() > 0);
         }
     }

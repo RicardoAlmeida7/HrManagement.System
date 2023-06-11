@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HrManagement.Data.Migrations
 {
     [DbContext(typeof(HrManagementContext))]
-    [Migration("20230603132209_register_employee_and_clinical")]
-    partial class register_employee_and_clinical
+    [Migration("20230611232545_new_migration")]
+    partial class new_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,14 +35,12 @@ namespace HrManagement.Data.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("city");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MedicalClinicId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MedicalClinicId1")
-                        .HasColumnType("int");
+                    b.Property<int?>("MedicalClinicId")
+                        .HasColumnType("int")
+                        .HasColumnName("medical_clinic_id");
 
                     b.Property<string>("Neighborhood")
                         .IsRequired()
@@ -73,7 +71,8 @@ namespace HrManagement.Data.Migrations
                     b.HasIndex("EmployeeId")
                         .IsUnique();
 
-                    b.HasIndex("MedicalClinicId1");
+                    b.HasIndex("MedicalClinicId")
+                        .IsUnique();
 
                     b.ToTable("addresses", (string)null);
                 });
@@ -103,34 +102,22 @@ namespace HrManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Comments")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)")
                         .HasColumnName("comments");
-
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("date_of_birth");
 
-                    b.Property<int?>("DepartmentEntityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("department_id");
 
                     b.Property<DateTime>("HiringDate")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("hiring_date");
-
-                    b.Property<int>("MedicalExamId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -146,8 +133,6 @@ namespace HrManagement.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentEntityId");
-
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("employees", (string)null);
@@ -162,37 +147,39 @@ namespace HrManagement.Data.Migrations
 
                     b.Property<string>("CorporateEmail")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)")
                         .HasColumnName("corporate_email");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MedicalClinicId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MedicalClinicId1")
-                        .HasColumnType("int");
+                    b.Property<int?>("MedicalClinicId")
+                        .HasColumnType("int")
+                        .HasColumnName("medical_clinic_id");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)")
                         .HasColumnName("name");
 
                     b.Property<string>("PersonalEmail")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)")
                         .HasColumnName("personal_email");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("phone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId")
                         .IsUnique();
 
-                    b.HasIndex("MedicalClinicId1");
+                    b.HasIndex("MedicalClinicId")
+                        .IsUnique();
 
                     b.ToTable("contacts", (string)null);
                 });
@@ -204,12 +191,6 @@ namespace HrManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -217,12 +198,6 @@ namespace HrManagement.Data.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId")
-                        .IsUnique();
-
-                    b.HasIndex("ContactId")
-                        .IsUnique();
 
                     b.ToTable("medical_clinics", (string)null);
                 });
@@ -234,16 +209,13 @@ namespace HrManagement.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
-                    b.Property<int>("ClinicId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("descripton");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ExamDate")
@@ -253,6 +225,10 @@ namespace HrManagement.Data.Migrations
                     b.Property<int>("ExamStatus")
                         .HasColumnType("int")
                         .HasColumnName("status");
+
+                    b.Property<int>("MedicalClinicId")
+                        .HasColumnType("int")
+                        .HasColumnName("medical_clinic_id");
 
                     b.Property<DateTime>("NextExamDate")
                         .HasColumnType("datetime(6)")
@@ -270,9 +246,9 @@ namespace HrManagement.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClinicId");
+                    b.HasIndex("EmployeeId");
 
-                    b.HasIndex("EmployeeId")
+                    b.HasIndex("MedicalClinicId")
                         .IsUnique();
 
                     b.ToTable("medical_exams", (string)null);
@@ -485,14 +461,12 @@ namespace HrManagement.Data.Migrations
                     b.HasOne("HrManagement.Domain.Entities.Company.EmployeeEntity", "Employee")
                         .WithOne("Address")
                         .HasForeignKey("HrManagement.Domain.Entities.AddressEntity", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", "MedicalClinic")
-                        .WithMany()
-                        .HasForeignKey("MedicalClinicId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Address")
+                        .HasForeignKey("HrManagement.Domain.Entities.AddressEntity", "MedicalClinicId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Employee");
 
@@ -501,14 +475,10 @@ namespace HrManagement.Data.Migrations
 
             modelBuilder.Entity("HrManagement.Domain.Entities.Company.EmployeeEntity", b =>
                 {
-                    b.HasOne("HrManagement.Domain.Entities.Company.DepartmentEntity", null)
-                        .WithMany("Employees")
-                        .HasForeignKey("DepartmentEntityId");
-
                     b.HasOne("HrManagement.Domain.Entities.Company.DepartmentEntity", "Department")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Department");
@@ -519,56 +489,33 @@ namespace HrManagement.Data.Migrations
                     b.HasOne("HrManagement.Domain.Entities.Company.EmployeeEntity", "Employee")
                         .WithOne("Contact")
                         .HasForeignKey("HrManagement.Domain.Entities.ContactEntity", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", "MedicalClinic")
-                        .WithMany()
-                        .HasForeignKey("MedicalClinicId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Contact")
+                        .HasForeignKey("HrManagement.Domain.Entities.ContactEntity", "MedicalClinicId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Employee");
 
                     b.Navigation("MedicalClinic");
                 });
 
-            modelBuilder.Entity("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", b =>
-                {
-                    b.HasOne("HrManagement.Domain.Entities.AddressEntity", "Address")
-                        .WithOne()
-                        .HasForeignKey("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", "AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HrManagement.Domain.Entities.ContactEntity", "Contact")
-                        .WithOne()
-                        .HasForeignKey("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", "ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Address");
-
-                    b.Navigation("Contact");
-                });
-
             modelBuilder.Entity("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalExamEntity", b =>
                 {
-                    b.HasOne("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", "Clinic")
-                        .WithMany()
-                        .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HrManagement.Domain.Entities.Company.EmployeeEntity", "Employee")
-                        .WithOne("MedicalExam")
-                        .HasForeignKey("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalExamEntity", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
 
-                    b.Navigation("Clinic");
+                    b.HasOne("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", "MedicalClinic")
+                        .WithOne()
+                        .HasForeignKey("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalExamEntity", "MedicalClinicId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Employee");
+
+                    b.Navigation("MedicalClinic");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -634,8 +581,14 @@ namespace HrManagement.Data.Migrations
 
                     b.Navigation("Contact")
                         .IsRequired();
+                });
 
-                    b.Navigation("MedicalExam")
+            modelBuilder.Entity("HrManagement.Domain.Entities.ThirdPartyServices.Medical.MedicalClinicEntity", b =>
+                {
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Contact")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -1,0 +1,70 @@
+﻿@page "/company/medicalclinic/home"
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@using X.PagedList;
+@model HrManagement.WebApplication.Pages.Company.MedicalClinic.HomeModel
+@{
+}
+<h1>Clinícas médicas</h1>
+<form asp-page="/company/medicalclinic/home" method="get">
+    <div class="text-right row">
+        <div class="col-sm-4">
+            <div class="input-group mb-3">
+                <input type="text" name="searchString" class="form-control" placeholder="Nome">
+                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+        <div class="col-sm-8" style="text-align:right">
+            <button onclick="showInPopup('@Url.Page("/company/medicalclinic/register",null,null, Request.Scheme)','Cadastrar cliníca médica')"
+                    type="button"
+                    class="btn btn-outline-secondary">
+                <i class="bi bi-plus"></i>
+                Cadastrar
+            </button>
+        </div>
+    </div>
+    <table class="table custom-table-hover table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Nome
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.MedicalClinics)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                </td>
+                <td class="text-end">
+                    <span onclick="showInPopup('@Url.Page("/company/medicalclinic/edit",null,new {id=item.Id}, Request.Scheme)','Editar departamento')"
+                      type="button"
+                      class="bi bi-pencil-fill">
+                    </span>
+                    <span onclick="showInPopup('@Url.Page("/company/medicalclinic/delete",null,new {id=item.Id}, Request.Scheme)','Excluir departamento')"
+                      type="button"
+                      class="bi bi-trash-fill">
+                    </span>
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="pagination justify-content-end">
+        @Html.PagedListPager(Model.MedicalClinics, pageNumber => Url.Page("/company/department/home", new {pageNumber}),
+        new PagedListRenderOptions
+        {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+        DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded
+        })
+    </div>
+</form>

@@ -1,6 +1,6 @@
 ﻿namespace HrManagement.Domain.Enums.ThirdPartyServices
 {
-    public enum ExamStaus
+    public enum ExamStatus
     {
         Normal,
         Agendar,

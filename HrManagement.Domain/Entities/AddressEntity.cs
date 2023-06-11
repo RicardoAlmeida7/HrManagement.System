@@ -12,10 +12,10 @@ namespace HrManagement.Domain.Entities
         public string State { get; set; }
         public string ZipCode { get; set; }
 
-        public int MedicalClinicId { get; set; }
-        public MedicalClinicEntity MedicalClinic { get; set; }
+        public int? MedicalClinicId { get; set; }
+        public MedicalClinicEntity? MedicalClinic { get; set; }
 
-        public int EmployeeId { get; set; }
-        public EmployeeEntity Employee { get; set; }
+        public int? EmployeeId { get; set; }
+        public EmployeeEntity? Employee { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HrManagement.Domain.Entities;
+using HrManagement.Domain.Entities.ThirdPartyServices.Medical;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -40,15 +41,13 @@ namespace HrManagement.Data.EntityConfig.Domain
                 .IsRequired()
                 .HasMaxLength(9);
 
+            builder.Property(e => e.MedicalClinicId)
+                .HasColumnName("medical_clinic_id");
+
             builder.HasOne(e => e.MedicalClinic)
                 .WithOne(e => e.Address)
-                .HasForeignKey<AddressEntity>(e => e.MedicalClinicId)
-                .IsRequired();
-
-            builder.HasOne(e => e.Employee)
-                .WithOne(e => e.Address)
-                .HasForeignKey<AddressEntity>(e => e.EmployeeId)
-                .IsRequired();
+                .HasForeignKey<MedicalClinicEntity>(e => e.Id)
+                .HasPrincipalKey<AddressEntity>(e => e.Id);
         }
     }
 }
