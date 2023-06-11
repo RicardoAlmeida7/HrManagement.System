@@ -1,0 +1,24 @@
+﻿@page "/company/department/delete"
+@model HrManagement.WebApplication.Pages.Company.Department.DeleteModel
+@{
+    Layout = "_LayoutModal";
+}
+<form asp-page="/company/department/delete" method="post" onsubmit="return jQueryAjaxPost(this)">
+    @Html.HiddenFor(p => p.Department.Id)
+    <div>
+        <h2>
+            <strong>
+                Deseja excluir permanetemente o departamento @Model.Department.Name?
+            </strong>
+        </h2>
+        <p class="alert alert-warning text-danger text-center">
+            <strong>
+                Esta ação não poderá ser desfeita após a confirmação!
+            </strong>
+        </p>
+    </div>
+    <div class="form-group" style="text-align:right">
+        <input type="button" value="Cancelar" data-bs-dismiss="modal" class="btn btn-outline-secondary" />
+        <input type="submit" value="Confirmar" class="btn btn-primary" style="margin-left:10px" />
+    </div>
+</form>

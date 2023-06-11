@@ -1,4 +1,5 @@
 ﻿using HrManagement.Domain.Entities;
+using HrManagement.Domain.Entities.ThirdPartyServices.Medical;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,26 +19,31 @@ namespace HrManagement.Data.EntityConfig.Domain
 
             builder.Property(e => e.Name)
                 .HasColumnName("name")
-                .HasMaxLength(100);
+                .IsRequired(false)
+                .HasMaxLength(60);
 
             builder.Property(e => e.CorporateEmail)
                 .HasColumnName("corporate_email")
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(60);
+
+            builder.Property(e => e.Phone)
+               .HasColumnName("phone")
+               .IsRequired(false)
+               .HasMaxLength(20);
 
             builder.Property(e => e.PersonalEmail)
                 .HasColumnName("personal_email")
-                .HasMaxLength(100);
+                .IsRequired(false)
+                .HasMaxLength(60);
 
-            builder.HasOne(e => e.Employee)
-                .WithOne(e => e.Contact)
-                .HasForeignKey<ContactEntity>(e => e.EmployeeId)
-                .IsRequired();
+            builder.Property(e => e.MedicalClinicId)
+                .HasColumnName("medical_clinic_id");
 
             builder.HasOne(e => e.MedicalClinic)
-                .WithOne(e => e.Contact)
-                .HasForeignKey<ContactEntity>(e => e.MedicalClinicId)
-                .IsRequired();
+               .WithOne(e => e.Contact)
+               .HasForeignKey<MedicalClinicEntity>(e => e.Id)
+               .HasPrincipalKey<ContactEntity>(e => e.Id);
         }
     }
 }

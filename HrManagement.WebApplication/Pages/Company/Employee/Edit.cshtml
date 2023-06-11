@@ -1,0 +1,82 @@
+﻿@page "/company/employee/edit"
+@using HrManagement.AppService.Services.CompanyServices.Department;
+@model HrManagement.WebApplication.Pages.Company.Employee.EditModel
+@inject IDepartmentService Deparments;
+@{
+    Layout = "_LayoutModal";
+}
+<form asp-page="/company/employee/edit" method="post" onsubmit="return jQueryAjaxPost(this)">
+    <div asp-validation-summary="ModelOnly" id="summary" class="alert alert-danger"></div>
+    @Html.HiddenFor(model => model.Employee.Id)
+    @Html.HiddenFor(model => model.Employee.Contact.Id)
+    @Html.HiddenFor(model => model.Employee.Address.Id)
+    <div class="mb-3 form-group">
+        @Html.EditorFor(model => model.Employee.Name, new { htmlAttributes = new { @class = "form-control", @placeholder="Nome do(a) colaborador(a)"} })
+        @Html.ValidationMessageFor(model => model.Employee.Name, "", new { @class = "text-danger" })
+    </div>
+    <div class="mb-3 row">
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.Employee.HiringDate)
+            <input asp-for="Employee.HiringDate " type="date" class="form-control">
+            @Html.ValidationMessageFor(model => model.Employee.HiringDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.Employee.DateOfBirth)
+            <input asp-for="Employee.DateOfBirth " type="date" class="form-control">
+            @Html.ValidationMessageFor(model => model.Employee.DateOfBirth, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="form-group col-8">
+            @Html.DropDownListFor(model => model.Employee.DepartmentId, Deparments.GetAll().Select(s => new SelectListItem() { Text = s.Name, Value = s.Id.ToString() }), "Selecione", new { @class = "form-control"})
+            @Html.ValidationMessageFor(model => model.Employee.DepartmentId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-4">
+            @Html.EditorFor(model => model.Employee.PositionInTheCompany, new { htmlAttributes = new { @class = "form-control", @placeholder="Cargo/função"} })
+            @Html.ValidationMessageFor(model => model.Employee.PositionInTheCompany, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="form-group col-8">
+            @Html.EditorFor(model => model.Employee.Address.Street, new { htmlAttributes = new { @class = "form-control", @placeholder="Rua e número"} })
+            @Html.ValidationMessageFor(model => model.Employee.Address.Street, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-4">
+            @Html.EditorFor(model => model.Employee.Address.City, new { htmlAttributes = new { @class = "form-control", @placeholder="Cidade"} })
+            @Html.ValidationMessageFor(model => model.Employee.Address.City, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="form-group col-6">
+            @Html.EditorFor(model => model.Employee.Address.Neighborhood, new { htmlAttributes = new { @class = "form-control", @placeholder="Bairro"} })
+            @Html.ValidationMessageFor(model => model.Employee.Address.Neighborhood, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-3">
+            @Html.EditorFor(model => model.Employee.Address.State, new { htmlAttributes = new { @class = "form-control", @placeholder="Estado"} })
+            @Html.ValidationMessageFor(model => model.Employee.Address.State, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-3">
+            @Html.EditorFor(model => model.Employee.Address.ZipCode, new { htmlAttributes = new { @class = "form-control", @placeholder="CEP"} })
+            @Html.ValidationMessageFor(model => model.Employee.Address.ZipCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="form-group col-3">
+            @Html.EditorFor(model => model.Employee.Contact.CorporateEmail, new { htmlAttributes = new { @class = "form-control", @placeholder="E-mail"} })
+            @Html.ValidationMessageFor(model => model.Employee.Contact.CorporateEmail, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-3">
+            @Html.EditorFor(model => model.Employee.Contact.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder="Telefone"} })
+            @Html.ValidationMessageFor(model => model.Employee.Contact.Phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Employee.Comments)
+        <textarea class="form-control col-lg-12" asp-for="Employee.Comments"></textarea>
+    </div>
+
+    <div class="form-group" style="text-align:right; margin-top:10px">
+        <input type="button" value="Cancelar" data-bs-dismiss="modal" class="btn btn-outline-secondary" />
+        <input type="submit" value="Salvar" class="btn btn-primary" style="margin-left:10px" />
+    </div>
+</form>

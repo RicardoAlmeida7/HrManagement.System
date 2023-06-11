@@ -1,0 +1,24 @@
+﻿@page "/company/medicalclinic/delete"
+@model HrManagement.WebApplication.Pages.Company.MedicalClinic.DeleteModel
+@{
+    Layout = "_LayoutModal";
+}
+<form asp-page="/company/medicalclinic/delete" method="post" onsubmit="return jQueryAjaxPost(this)">
+    @Html.HiddenFor(model => model.Clinic.Id)
+    <div>
+        <h2>
+            <strong>
+                Deseja excluir permanetemente o departamento @Model.Clinic.Name?
+            </strong>
+        </h2>
+        <p class="alert alert-warning text-danger text-center">
+            <strong>
+                Esta ação não poderá ser desfeita após a confirmação!
+            </strong>
+        </p>
+    </div>
+    <div class="form-group" style="text-align:right">
+        <input type="button" value="Cancelar" data-bs-dismiss="modal" class="btn btn-outline-secondary" />
+        <input type="submit" value="Confirmar" class="btn btn-primary" style="margin-left:10px" />
+    </div>
+</form>

@@ -1,0 +1,85 @@
+﻿@page "/company/medicalClinic/edit"
+@model HrManagement.WebApplication.Pages.Company.MedicalClinic.EditModel
+@{
+    Layout = "_LayoutModal";
+}
+<form asp-page="/company/medicalClinic/edit" method="post" onsubmit="return jQueryAjaxPost(this)">
+    <div asp-validation-summary="ModelOnly" id="summary" class="alert alert-danger"></div>
+    @Html.HiddenFor(model => model.MedicalClinic.Id)
+    @Html.HiddenFor(model => model.MedicalClinic.Address.Id)
+    @Html.HiddenFor(model => model.MedicalClinic.Contact.Id)
+    <div class="form-group">
+        @Html.LabelFor(model => model.MedicalClinic.Name, htmlAttributes: new { @class = "control-label col-md-10" })
+        <div>
+            @Html.EditorFor(model => model.MedicalClinic.Name, new { htmlAttributes = new { @class = "form-control", @placeholder="Nome da clínica"} })
+            @Html.ValidationMessageFor(model => model.MedicalClinic.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-8">
+            @Html.LabelFor(model => model.MedicalClinic.Address.Street, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Address.Street, new { htmlAttributes = new { @class = "form-control", @placeholder="Rua e número"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Address.Street, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-4">
+            @Html.LabelFor(model => model.MedicalClinic.Address.City, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Address.City, new { htmlAttributes = new { @class = "form-control", @placeholder="Cidade"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Address.City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.MedicalClinic.Address.Neighborhood, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Address.Neighborhood, new { htmlAttributes = new { @class = "form-control", @placeholder="Bairro"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Address.Neighborhood, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-3">
+            @Html.LabelFor(model => model.MedicalClinic.Address.State, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Address.State, new { htmlAttributes = new { @class = "form-control", @placeholder="Estado"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Address.State, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-3">
+            @Html.LabelFor(model => model.MedicalClinic.Address.ZipCode, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Address.ZipCode, new { htmlAttributes = new { @class = "form-control", @placeholder="CEP"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Address.ZipCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-6">
+            @Html.LabelFor(model => model.MedicalClinic.Contact.Name, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Contact.Name, new { htmlAttributes = new { @class = "form-control", @placeholder="Nome do contato"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Contact.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-3">
+            @Html.LabelFor(model => model.MedicalClinic.Contact.CorporateEmail, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Contact.CorporateEmail, new { htmlAttributes = new { @class = "form-control", @placeholder="E-mail"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Contact.CorporateEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-3">
+            @Html.LabelFor(model => model.MedicalClinic.Contact.Phone, htmlAttributes: new { @class = "control-label col-md-10" })
+            <div>
+                @Html.EditorFor(model => model.MedicalClinic.Contact.Phone, new { htmlAttributes = new { @class = "form-control", @placeholder="Telefone"} })
+                @Html.ValidationMessageFor(model => model.MedicalClinic.Contact.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" style="text-align:right; margin-top:10px">
+        <input type="button" value="Cancelar" data-bs-dismiss="modal" class="btn btn-outline-secondary" />
+        <input type="submit" value="Salvar" class="btn btn-primary" style="margin-left:10px" />
+    </div>
+</form>

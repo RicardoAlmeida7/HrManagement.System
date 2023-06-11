@@ -17,11 +17,12 @@ namespace HrManagement.Domain.Entities.ThirdPartyServices.Medical
 
         public bool RequiresNextExam { get; set;}
 
-        public ExamStaus ExamStatus { get; set; }
+        public ExamStatus ExamStatus { get; set; }
 
-        public MedicalClinicEntity Clinic { get; set; }
+        public int MedicalClinicId { get; set; }
+        public virtual MedicalClinicEntity MedicalClinic { get; set; }
 
-        public int EmployeeId { get; set; }
-        public EmployeeEntity Employee { get; set; }
+        public int? EmployeeId { get; set; }
+        public virtual EmployeeEntity? Employee { get; set; }
     }
 }

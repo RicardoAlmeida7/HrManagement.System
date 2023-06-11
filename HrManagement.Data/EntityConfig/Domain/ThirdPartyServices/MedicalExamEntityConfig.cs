@@ -40,10 +40,13 @@ namespace HrManagement.Data.EntityConfig.Domain.ThirdPartyServices
                .HasColumnName("descripton")
                .HasMaxLength(100);
 
-            builder.HasOne(e => e.Employee)
-                .WithOne(e => e.MedicalExam)
-                .HasForeignKey<MedicalExamEntity>(e => e.EmployeeId)
-                .IsRequired();
+            builder.Property(e => e.MedicalClinicId)
+              .HasColumnName("medical_clinic_id");
+
+            builder.HasOne(e => e.MedicalClinic)
+               .WithOne()
+               .HasForeignKey<MedicalExamEntity>(c => c.MedicalClinicId)
+               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
