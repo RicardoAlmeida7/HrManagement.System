@@ -1,5 +1,5 @@
-using HrManagement.AppService.Services.CompanyServices.Department;
-using HrManagement.AppService.ViewModels.Company;
+using HrManagement.Domain.Services.Department;
+using HrManagement.Domain.ViewModels.Company;
 using HrManagement.Security.ManagementRoles;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

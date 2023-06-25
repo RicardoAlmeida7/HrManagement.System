@@ -1,5 +1,5 @@
 using HrManagement.AppService.AutoMapper.UserService;
-using HrManagement.AppService.ViewModels.UsersViewModel;
+using HrManagement.Domain.ViewModels.UsersViewModel;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.Security.ManagementUsers;
 using HrManagement.WebApplication.Utils;

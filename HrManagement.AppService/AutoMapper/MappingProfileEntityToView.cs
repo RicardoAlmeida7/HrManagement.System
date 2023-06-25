@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using HrManagement.AppService.ViewModels.Company;
-using HrManagement.AppService.ViewModels.Generics;
-using HrManagement.AppService.ViewModels.ThirdPartyServices.Medical;
-using HrManagement.AppService.ViewModels.UsersViewModel;
 using HrManagement.Domain.Entities;
 using HrManagement.Domain.Entities.Company;
 using HrManagement.Domain.Entities.ThirdPartyServices.Medical;
+using HrManagement.Domain.ViewModels.Company;
+using HrManagement.Domain.ViewModels.Generics;
+using HrManagement.Domain.ViewModels.ThirdPartyServices.Medical;
+using HrManagement.Domain.ViewModels.UsersViewModel;
 using HrManagement.Security;
 
 namespace HrManagement.AppService.AutoMapper

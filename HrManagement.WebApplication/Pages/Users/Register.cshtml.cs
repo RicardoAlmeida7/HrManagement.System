@@ -1,5 +1,5 @@
 using HrManagement.AppService.AutoMapper.UserService;
-using HrManagement.AppService.ViewModels.UsersViewModel;
+using HrManagement.Domain.ViewModels.UsersViewModel;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.Security.ManagementUsers;
 using HrManagement.WebApplication.Utils;
@@ -25,7 +25,7 @@ namespace HrManagement.WebApplication.Pages.Users
         public RegisterModel(IManagementUsers managementUsers, RoleManager<IdentityRole> roleManager, IUserService userService)
         {
             _managementUsers = managementUsers;
-            UserPageModel = new UserPageModel(roleManager);
+            UserPageModel = new UserPageModel(roleManager.Roles.Select(p => p.Name).ToList());
             _userService = userService;
         }
 

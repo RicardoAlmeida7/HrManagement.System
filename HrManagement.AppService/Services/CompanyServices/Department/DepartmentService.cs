@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
-using HrManagement.AppService.ViewModels.Company;
-using HrManagement.Data.Repositories.CompanyRepositories;
 using HrManagement.Domain.Entities.Company;
+using HrManagement.Domain.Repositories.Company;
+using HrManagement.Domain.Services.Department;
+using HrManagement.Domain.Utils;
+using HrManagement.Domain.ViewModels.Company;
 
 namespace HrManagement.AppService.Services.CompanyServices.Department
 {
@@ -30,7 +32,7 @@ namespace HrManagement.AppService.Services.CompanyServices.Department
 
         public bool ExistDeparment(string name)
         {
-            return _service.ReadAll().Any(x => x.Name.Contains(name, StringComparison.CurrentCultureIgnoreCase));
+            return _service.ReadAll().Any(e => StringUtils.Compare(e.Name, name));
         }
 
         public IList<DepartmentModel> GetAll()

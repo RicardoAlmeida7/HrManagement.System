@@ -2,6 +2,9 @@
 using HrManagement.Data.Repositories.CompanyRepositories;
 using HrManagement.Data.Repositories.GenericsRepositories;
 using HrManagement.Data.Repositories.ThirdPartyServicesRepository.Medical;
+using HrManagement.Domain.Repositories.Company;
+using HrManagement.Domain.Repositories.Generics;
+using HrManagement.Domain.Repositories.ThirdPartyServices.Medical;
 
 namespace HrManagement.Ioc
 {

@@ -1,5 +1,6 @@
 ﻿using HrManagement.Data.Context;
 using HrManagement.Domain.Entities;
+using HrManagement.Domain.Repositories.Generics;
 using Microsoft.EntityFrameworkCore;
 
 namespace HrManagement.Data.Repositories.GenericsRepositories

@@ -1,5 +1,5 @@
-using HrManagement.AppService.ViewModels.Login;
-using HrManagement.EmailService;
+using HrManagement.Domain.Services.Email;
+using HrManagement.Domain.ViewModels.Login;
 using HrManagement.EmailService.Templates;
 using HrManagement.Security;
 using Microsoft.AspNetCore.Identity;

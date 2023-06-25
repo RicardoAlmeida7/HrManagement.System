@@ -1,4 +1,5 @@
 ﻿using HrManagement.Data.Context;
+using HrManagement.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace HrManagement.Data.Repositories
@@ -45,7 +46,12 @@ namespace HrManagement.Data.Repositories
 
         public async Task<T> ReadByIdAsync(int id)
         {
-            return await _context.Set<T>().FindAsync(id); 
+            var entity = await _context.Set<T>().FindAsync(id);
+            if (entity != null)
+            {
+                _context.Entry(entity).State = EntityState.Detached;
+            }
+            return entity;
         }
 
         public async Task<T> ReadByIdAsync(Guid id)

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using HrManagement.Domain.Services.Email;
+using System.Net;
 using System.Net.Mail;
 
 namespace HrManagement.EmailService

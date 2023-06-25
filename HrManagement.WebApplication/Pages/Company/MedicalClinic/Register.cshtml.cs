@@ -1,5 +1,5 @@
-using HrManagement.AppService.Services.ThirdPartyServices.MedicalClinic;
-using HrManagement.AppService.ViewModels.ThirdPartyServices.Medical;
+using HrManagement.Domain.Services.ThirdPartyServices.Medical;
+using HrManagement.Domain.ViewModels.ThirdPartyServices.Medical;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.WebApplication.Utils;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +28,7 @@ namespace HrManagement.WebApplication.Pages.Company.MedicalClinic
         {
             if (ModelState.IsValid)
             {
-                if (!_medicalClinicService.ExistMedicalClinicAsync(MedicalClinic).Result)
+                if (_medicalClinicService.NameAvailableForUseAsync(MedicalClinic).Result)
                 {
                     SucessResult = true;
                     TempData[ResultsMessage.SUCCESS] = $"Clinica médica {MedicalClinic.Name} cadastrada com sucesso.";
