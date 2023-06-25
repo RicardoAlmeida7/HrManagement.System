@@ -1,4 +1,4 @@
-﻿using HrManagement.AppService.ViewModels.UsersViewModel;
+﻿using HrManagement.Domain.ViewModels.UsersViewModel;
 using HrManagement.Security;
 
 namespace HrManagement.AppService.AutoMapper.UserService

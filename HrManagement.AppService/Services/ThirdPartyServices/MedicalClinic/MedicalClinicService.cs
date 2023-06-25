@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using HrManagement.AppService.ViewModels.ThirdPartyServices.Medical;
-using HrManagement.Data.Repositories.ThirdPartyServicesRepository.Medical;
 using HrManagement.Domain.Entities.ThirdPartyServices.Medical;
+using HrManagement.Domain.Repositories.ThirdPartyServices.Medical;
+using HrManagement.Domain.Services.ThirdPartyServices.Medical;
 using HrManagement.Domain.Utils;
-using System.Xml.Linq;
+using HrManagement.Domain.ViewModels.ThirdPartyServices.Medical;
 
 namespace HrManagement.AppService.Services.ThirdPartyServices.MedicalClinic
 {
@@ -30,17 +30,21 @@ namespace HrManagement.AppService.Services.ThirdPartyServices.MedicalClinic
             return await _service.DeleteAsync(entity);
         }
 
-        public async Task<bool> ExistMedicalClinicAsync(MedicalClinicModel model)
+        public async Task<bool> NameAvailableForUseAsync(MedicalClinicModel model)
         {
-            var entities = _service.ReadAll();
-            foreach (var entity in entities)
+            if (model.Id is not null)
             {
-                if (StringUtils.FormantStringToCompare(entity.Name).Equals(StringUtils.FormantStringToCompare(model.Name)))
+                var clinic = await _service.ReadByIdAsync((int)model.Id);
+                if (!StringUtils.Compare(clinic.Name, model.Name))
                 {
-                    return true;
+                    return !_service.ReadAll().Any(e => StringUtils.Compare(e.Name, model.Name));
                 }
+                return true;
             }
-            return false;
+            else
+            {
+                return !_service.ReadAll().Any(e => StringUtils.Compare(e.Name, model.Name));
+            }
         }
 
         public IList<MedicalClinicModel> GetAll()

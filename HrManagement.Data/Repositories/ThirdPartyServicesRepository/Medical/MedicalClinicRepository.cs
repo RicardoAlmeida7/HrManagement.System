@@ -1,5 +1,6 @@
 ﻿using HrManagement.Data.Context;
 using HrManagement.Domain.Entities.ThirdPartyServices.Medical;
+using HrManagement.Domain.Repositories.ThirdPartyServices.Medical;
 using Microsoft.EntityFrameworkCore;
 
 namespace HrManagement.Data.Repositories.ThirdPartyServicesRepository.Medical

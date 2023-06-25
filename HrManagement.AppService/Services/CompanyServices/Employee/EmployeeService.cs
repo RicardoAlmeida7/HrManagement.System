@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using HrManagement.AppService.ViewModels.Company;
-using HrManagement.Data.Repositories.CompanyRepositories;
 using HrManagement.Domain.Entities.Company;
+using HrManagement.Domain.Repositories.Company;
+using HrManagement.Domain.Services.Employee;
+using HrManagement.Domain.ViewModels.Company;
 
 namespace HrManagement.AppService.Services.CompanyServices.Employee
 {

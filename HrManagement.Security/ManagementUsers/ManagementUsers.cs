@@ -1,4 +1,4 @@
-﻿using HrManagement.EmailService;
+﻿using HrManagement.Domain.Services.Email;
 using HrManagement.EmailService.Templates;
 using HrManagement.Security.Cryptography;
 using HrManagement.Security.ManagementRoles;

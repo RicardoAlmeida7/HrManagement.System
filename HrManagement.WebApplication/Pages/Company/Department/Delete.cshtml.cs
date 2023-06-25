@@ -1,5 +1,5 @@
-using HrManagement.AppService.Services.CompanyServices.Department;
-using HrManagement.AppService.ViewModels.Company;
+using HrManagement.Domain.Services.Department;
+using HrManagement.Domain.ViewModels.Company;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.WebApplication.Utils;
 using Microsoft.AspNetCore.Authorization;
@@ -27,10 +27,10 @@ namespace HrManagement.WebApplication.Pages.Company.Department
 
         public async Task OnPostAsync()
         {
+            SucessResult = true;
             try
             {
                 var result = await _departmentService.DeleteAsync((int)Department.Id);
-                SucessResult = true;
                 if (result)
                 {
                     TempData[ResultsMessage.SUCCESS] = $"Departamento {Department.Name} removido com sucesso.";

@@ -1,11 +1,10 @@
 using HrManagement.AppService.AutoMapper.UserService;
-using HrManagement.AppService.ViewModels.UsersViewModel;
+using HrManagement.Domain.ViewModels.UsersViewModel;
 using HrManagement.Security.ManagementRoles;
 using HrManagement.Security.ManagementUsers;
 using HrManagement.WebApplication.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace HrManagement.WebApplication.Pages.Users
 {

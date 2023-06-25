@@ -1,4 +1,4 @@
-using HrManagement.AppService.ViewModels.Login;
+using HrManagement.Domain.ViewModels.Login;
 using HrManagement.Security;
 using HrManagement.Security.Authentication;
 using Microsoft.AspNetCore.Identity;

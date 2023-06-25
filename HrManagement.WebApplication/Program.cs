@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using HrManagement.Data.Context;
+using HrManagement.Domain.Services.Email;
 using HrManagement.EmailService;
 using HrManagement.EmailService.Templates;
 using HrManagement.Ioc;
